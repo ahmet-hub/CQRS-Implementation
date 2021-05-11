@@ -24,7 +24,7 @@ namespace CQRS.Handlers.QueryHandler
         }
         public async Task<List<ProductDto>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
         {
-            var result =  await _appContext.Product.ToListAsync();
+            var result =  await _appContext.Products.Include(x=>x.Category).ToListAsync();
             return _mapper.Map<List<ProductDto>>(result);
            
         }

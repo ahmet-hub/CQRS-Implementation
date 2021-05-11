@@ -1,18 +1,16 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft;
 
 namespace CQRS
 {
@@ -33,9 +31,10 @@ namespace CQRS
             services.AddDbContext<DAL.AppContext>(
                 options => options.UseSqlServer(Configuration["ConnectionStrings:SqlConStr"].ToString()));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
-            services.AddControllers();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRS", Version = "v1" });

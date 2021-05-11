@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CQRS.Dtos;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace CQRS.Commands.Product
 {
-    public class CreateProductCommand:IRequest<Entities.Product>
+    public class CreateProductCommand:IRequest<ProductDto>
     {
-        public Entities.Product Product { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Amount { get; set; }
+        public int CategoryId { get; set; }
     }
 }

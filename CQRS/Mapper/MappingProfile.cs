@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CQRS.Commands.Category;
+using CQRS.Commands.Product;
 using CQRS.Dtos;
 using CQRS.Entities;
 using System;
@@ -12,11 +14,32 @@ namespace CQRS.Mapper
     {
         public MappingProfile()
         {
+            #region Product
+
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
+            CreateMap<UpdateProductDto, Product>();
+            CreateMap<Product, UpdateProductDto>();
+          
+            CreateMap<CreateProductCommand, Product>();
+            CreateMap<UpdateProductCommand, Product>();
 
-         /*   CreateMap<Category, CategoryDto>();
-            CreateMap<ProductDto, Category>();*/
+            #endregion
+
+            #region Category
+
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+            
+            CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<Category, UpdateCategoryDto>();
+            
+            
+            CreateMap<CreateCategoryCommand, Category>();
+            CreateMap<UpdateCategoryCommand, Category>();
+
+            #endregion
+
         }
     }
 }

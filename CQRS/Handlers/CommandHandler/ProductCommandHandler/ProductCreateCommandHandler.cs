@@ -1,4 +1,6 @@
-﻿using CQRS.Commands.Product;
+﻿using AutoMapper;
+using CQRS.Commands.Product;
+using CQRS.Dtos;
 using CQRS.Entities;
 using MediatR;
 using System;
@@ -9,19 +11,22 @@ using System.Threading.Tasks;
 
 namespace CQRS.Handlers.CommandHandler
 {
-    public class ProductUpdateCommandHandler : IRequestHandler<UpdateProductCommand, Product>
+    public class ProductCreateCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
     {
         private readonly DAL.AppContext _appContext;
+        private readonly IMapper _mapper;
 
-        public ProductUpdateCommandHandler(DAL.AppContext appContext)
+        public ProductCreateCommandHandler(DAL.AppContext appContext, IMapper mapper)
         {
             _appContext = appContext;
+            _mapper = mapper;
         }
-        public async Task<Product> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+
+        public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = _appContext.Product.Update(request.Product);
+                var result = await _appContext.Products.AddAsync(_mapper.Map<Product>(request), cancellationToken);
                 await _appContext.SaveChangesAsync();
                 return null;
             }

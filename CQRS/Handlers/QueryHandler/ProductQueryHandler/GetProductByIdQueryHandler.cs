@@ -24,7 +24,7 @@ namespace CQRS.Handlers.QueryHandler
 
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            var result= await _appContext.Product.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var result= await _appContext.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
              return _mapper.Map<ProductDto>(result);
         }
     }

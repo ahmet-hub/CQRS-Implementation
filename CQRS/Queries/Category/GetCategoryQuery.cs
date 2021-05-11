@@ -5,13 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRS.Commands.Product
+namespace CQRS.Queries.Category
 {
-    public class UpdateProductCommand:IRequest<ProductDto>
+    public class GetCategoryQuery:IRequest<CategoryDto>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int Amount { get; set; }
-
     }
 }

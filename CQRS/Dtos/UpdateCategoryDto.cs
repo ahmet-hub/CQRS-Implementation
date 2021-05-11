@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace CQRS.Dtos
 {
-    public class ProductDto
+    public class UpdateCategoryDto
     {
         public string Name { get; set; }
-        public decimal Amount { get; set; }
-        public CategoryDto Category{ get; set; }
     }
 }

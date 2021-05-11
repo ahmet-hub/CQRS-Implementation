@@ -1,7 +1,9 @@
 ﻿using CQRS.Commands.Product;
+using CQRS.Dtos;
 using CQRS.Queries.Product;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,10 +26,7 @@ namespace CQRS.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-
             return Ok(await _mediator.Send(new GetAllProductQuery()));
-            
-                
         }
 
         [HttpGet("{id}")]
@@ -46,6 +45,11 @@ namespace CQRS.Controllers
         public async Task<IActionResult> Put(UpdateProductCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchProduct(int id, JsonPatchDocument<UpdateProductDto> updateProduct)
+        {
+            return Ok( await _mediator.Send(new PatchProductCommand { Id=id, UpdateProduct = updateProduct }));
         }
     }
 }

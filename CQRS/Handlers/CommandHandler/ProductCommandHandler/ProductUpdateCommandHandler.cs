@@ -11,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace CQRS.Handlers.CommandHandler
 {
-    public class ProductCreateCommandHandler : IRequestHandler<CreateProductCommand, Product>
+    public class ProductUpdateCommandHandler : IRequestHandler<UpdateProductCommand, ProductDto>
     {
         private readonly DAL.AppContext _appContext;
-
-        public ProductCreateCommandHandler(DAL.AppContext appContext)
+        private readonly IMapper _mapper;
+        public ProductUpdateCommandHandler(DAL.AppContext appContext, IMapper mapper)
         {
             _appContext = appContext;
+            _mapper = mapper;
         }
-
-        public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _appContext.Product.AddAsync(request.Product, cancellationToken);
+                var result = _appContext.Products.Update(_mapper.Map<Product>(request));
                 await _appContext.SaveChangesAsync();
                 return null;
             }
